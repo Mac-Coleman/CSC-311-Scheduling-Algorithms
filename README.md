@@ -22,6 +22,6 @@ As inputs, .txt and .csv files should contain traces of processes for the simula
 * cpu_bursts: The remaining length of the process until it is terminated.
 All of the above values must be non-negative integers.
 
-### .xml
+### Extensible Markup Language (.xml)
 
 The function of .xml files as input is not yet decided.
