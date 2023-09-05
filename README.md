@@ -20,7 +20,18 @@ As inputs, .txt and .csv files should contain traces of processes for the simula
 * PID: Process ID
 * arrival_time: The time at which the process arrives to be scheduled.
 * cpu_bursts: The remaining length of the process until it is terminated.
+
 All of the above values must be non-negative integers.
+
+The following is an example of a trace written in the .csv format.
+```
+PID,arrival_time,cpu_bursts
+1,4,10
+2,1,20
+5,9,32
+7,9,19
+8,3,15
+```
 
 ### Extensible Markup Language (.xml)
 
