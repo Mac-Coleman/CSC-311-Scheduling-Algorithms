@@ -1,0 +1,20 @@
+# This is a .gitignore file
+# Each line is a pattern
+# Every file and directory that matches a pattern in this file will not be recognized by git
+# We will use it to exclude certain types of files.
+
+# For example, the pycache directory is not necessary to be committed to git.
+__pycache__
+*.pyc
+
+# Also, we don't want binary files (at least, not without GitLFS
+*.pdf
+*.docx
+*.zip
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+*.mp4
+*.mp3
