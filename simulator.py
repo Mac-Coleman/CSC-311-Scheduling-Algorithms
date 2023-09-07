@@ -31,6 +31,7 @@ def parse_trace(file_name, sort_arrival=False):
     return processes
 
 def simulate(file_name: str) -> Schedule:
+    arriving_processes = parse_trace(file_name, sort_arrival=True)
     pass
 
 if __name__ == "__main__":

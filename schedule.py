@@ -1,24 +1,28 @@
-from process import Process
+from process import Process, ProcessExecutionRecord
 
 class Schedule:
     """
     The schedule class is a dataclass wrapper that is intended to hold a list of process objects in the order in which
     the CPU executed them.
     """
-    processes: [Process]
+    process_records: [ProcessExecutionRecord]
     current: int = 0
 
-    def peek(self) -> Process:
-        if self.current >= len(self.processes):
+    def __init__(self):
+        self.process_records: [ProcessExecutionRecord] = []
+        self.current: int = 0
+
+    def peek(self) -> ProcessExecutionRecord:
+        if self.current >= len(self.process_records):
             raise IndexError("Attempted to peek next process but there are no processes remaining.")
-        return self.processes[self.current]
+        return self.process_records[self.current]
     
-    def next(self) -> Process:
-        if self.current >= len(self.processes):
+    def next(self) -> ProcessExecutionRecord:
+        if self.current >= len(self.process_records):
             raise IndexError("Attempted to get next process but there are no processes remaining.")
-        v = self.processes[self.current]
+        v = self.process_records[self.current]
         self.current += 1
         return v
     
     def __len__(self) -> int:
-        return len(self.processes)
+        return len(self.process_records)
