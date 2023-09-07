@@ -30,9 +30,17 @@ def parse_trace(file_name, sort_arrival=False):
                                          df[3][i]))
     return processes
 
-def simulate(file_name: str) -> Schedule:
-    arriving_processes = parse_trace(file_name, sort_arrival=True)
-    pass
+def simulate_fcfs(file_name: str) -> Schedule:
+    arriving_processes: [Process] = parse_trace(file_name, sort_arrival=True)
+    
+    cpu_time: int = 0
+    execution_schedule: Schedule = Schedule()
+
+    for arriving_process in arriving_processes:
+        execution_schedule.add_execution_record(arriving_process.to_record(cpu_time, arriving_process.burst_time))
+        cpu_time += arriving_process.burst_time
+        
+    return execution_schedule
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="Scheduling Algorithm Simulator", description="A program to simulate various process scheduling algorithms")
@@ -64,4 +72,6 @@ if __name__ == "__main__":
 
     if argument_namespace.input.endswith((".txt", ".csv")):
         # Run the simulator on a single input file.
-        pass    
+        
+        execution_schedule = simulate_fcfs(argument_namespace.input)
+        print(execution_schedule.process_records)
