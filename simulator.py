@@ -33,23 +33,35 @@ help_string = "{} {}\n" \
     "\t4\tsjf-pr\tshortest job first with preemption\n\n" \
     "Examples:\n" \
     "\t{} trace.txt rr 4\tSimulate the processes in trace.txt with round robin with a time quantum of 4.\n" \
-    "\t{} config.xml\tSimulate according to the information in config.xml\n\n" \
+    "\t{} config.xml\t\tSimulate according to the information in config.xml\n\n" \
     "See the README for more help.\n" \
     "Source online: <https://github.com/Mac-Coleman/CSC-311-Scheduling-Algorithms>"
 
-    
+def handle_help(arguments: {}):
+    print(help_string.format(name, version, sys.argv[0], sys.argv[0], sys.argv[0]))
+
+def handle_version(arguments: {}):
+    print(f"{name} {version}")
+
+def handle_trace(arguments: {}):
+    pass
+
+def handle_config(arguments: {}):
+    pass
 
 if __name__ == "__main__":
     
     arguments = parse_arguments(sys.argv)
     # Decide what to do based on parsed arguments...
 
+    # print(arguments)
+
     match arguments["action"]:
         case "help":
-            print(help_string.format(name, version, sys.argv[0], sys.argv[0], sys.argv[0]))
+            handle_help(arguments)
         case "version":
-            print(f"{name} {version}")
+            handle_version(arguments)
         case "use_trace":
-            pass
+            handle_trace(arguments)
         case "ues_config":
-            pass
+            handle_config(arguments)

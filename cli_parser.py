@@ -36,3 +36,12 @@ def parse_arguments(arguments: [str]) -> {str: str}:
         print("When a trace file is given as input, an algorithm and required options must be specified.")
         print("Run this program with -h or --help to learn more.")
         sys.exit(1)
+    
+    d = {
+        "action" : "use_trace",
+        "file" : sys.argv[1],
+        "algorithm" : sys.argv[2],
+        "parameters" : sys.argv[3:]
+    }
+
+    return d
