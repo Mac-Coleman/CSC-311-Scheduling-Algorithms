@@ -14,7 +14,30 @@ name = "Schedule Simulator"
 version = "0.0.1"
 
 help_string = "{} {}\n" \
-    "usage: {} [-vh] [input.txt algorithm | input.csv algorithm | input.xml]"
+    "usage: {} [-v | -h] INPUT_FILE [ALGORITHM [PARAMETERS ...]]\n" \
+    "Simulate various scheduling algorithms to produce schedules and waiting time statistics.\n\n" \
+    "OPTIONS:\n" \
+    "\t-h, --help\t\tprint this help message.\n" \
+    "\t-v, --version\t\tprint version information.\n\n" \
+    "INPUT_FILE must be either a .csv or .txt file containing process trace information\n"\
+    "or a .xml file with configuration information. When INPUT_FILE is a .csv or .txt trace\n" \
+    "file, an algorithm must be specified from the table below. Some algorithms require\n" \
+    "additional options which must be passed when required.\n\n" \
+    "ALGORITHMS:\n" \
+    "\tnumber\tname\tdescription\n" \
+    "\t*****************************\n" \
+    "\t1\tfcfs\tfirst come first serve\n" \
+    "\t2\trr\tround robin\n" \
+    "\t\t\t[quantum] the time each process gets before it is evicted from the processor.\n" \
+    "\t3\tsjf-co\tshortest job first without preemption\n" \
+    "\t4\tsjf-pr\tshortest job first with preemption\n\n" \
+    "Examples:\n" \
+    "\t{} trace.txt rr 4\tSimulate the processes in trace.txt with round robin with a time quantum of 4.\n" \
+    "\t{} config.xml\tSimulate according to the information in config.xml\n\n" \
+    "See the README for more help.\n" \
+    "Source online: <https://github.com/Mac-Coleman/CSC-311-Scheduling-Algorithms>"
+
+    
 
 if __name__ == "__main__":
     
@@ -23,7 +46,7 @@ if __name__ == "__main__":
 
     match arguments["action"]:
         case "help":
-            print(help_string.format(name, version, sys.argv[0]))
+            print(help_string.format(name, version, sys.argv[0], sys.argv[0], sys.argv[0]))
         case "version":
             print(f"{name} {version}")
         case "use_trace":
