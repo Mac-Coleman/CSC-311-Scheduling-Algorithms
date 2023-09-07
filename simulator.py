@@ -36,6 +36,10 @@ if __name__ == "__main__":
         print("Algorithms can not be specified when a .xml file is the input.")
         sys.exit(1)
 
+    if argument_namespace.input.endswith((".txt", ".csv")):
+        # Run the simulator on a single input file.
+        pass
+
 # parses the trace file and returns a list of process objects
 # can choose to sort by arrival date
 def parse_trace(file_name, sort_arrival=False):
