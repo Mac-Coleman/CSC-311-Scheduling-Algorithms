@@ -28,6 +28,9 @@ def parse_trace(file_name, sort_arrival=False):
                                          df[3][i]))
     return processes
 
+def simulate(file_name):
+    pass
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="Scheduling Algorithm Simulator", description="A program to simulate various process scheduling algorithms")
 
