@@ -8,6 +8,26 @@ import sys
 import pandas as pd
 import process
 
+# parses the trace file and returns a list of process objects
+# can choose to sort by arrival date
+def parse_trace(file_name, sort_arrival=False):
+    '''
+    file_name: exact file name
+    sort_arrival: boolean value if you need to sort by arrival time
+    '''
+    df = pd.read_csv(file_name, header=None)
+    if sort_arrival:
+        df = df.sort_values(df.columns[1])
+    
+    processes = []
+    for i in df[0].index.values.tolist():
+        # goes by the row of the trace file and makes a process object
+        processes.append(process.Process(df[0][i], 
+                                         df[1][i],
+                                         df[2][i],
+                                         df[3][i]))
+    return processes
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="Scheduling Algorithm Simulator", description="A program to simulate various process scheduling algorithms")
 
@@ -38,25 +58,4 @@ if __name__ == "__main__":
 
     if argument_namespace.input.endswith((".txt", ".csv")):
         # Run the simulator on a single input file.
-        pass
-
-# parses the trace file and returns a list of process objects
-# can choose to sort by arrival date
-def parse_trace(file_name, sort_arrival=False):
-    '''
-    file_name: exact file name
-    sort_arrival: boolean value if you need to sort by arrival time
-    '''
-    df = pd.read_csv(file_name, header=None)
-    if sort_arrival:
-        df = df.sort_values(df.columns[1])
-    
-    processes = []
-    for i in df[0].index.values.tolist():
-        # goes by the row of the trace file and makes a process object
-        processes.append(process.Process(df[0][i], 
-                                         df[1][i],
-                                         df[2][i],
-                                         df[3][i]))
-    return processes
-    
+        pass    
