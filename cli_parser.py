@@ -7,27 +7,20 @@ that the calling function will be able to decide what actions to take.
 
 
 import sys
-from enum import Enum
 
-class Action(Enum):
-    VERSION = 0
-    HELP = 1
-    USE_TRACE = 2
-    USE_CONFIG = 3
-
-def parse_arguments(arguments: [str]) -> (Action, {str: str}):
+def parse_arguments(arguments: [str]) -> {str: str}:
 
     if len(arguments) <= 1 or arguments[1] in ["-h", "--help"]:
-        return (Action.HELP, {})
+        return {"action": "help"}
     
     if arguments[1] in ["-v", "--version"]:
-        return (Action.VERSION, {})
+        return {"action": "version"}
     
     if arguments[1].endswith((".txt", ".csv")):
-        return (Action.USE_TRACE, {})
+        return {"action": "use_trace"}
     
     elif arguments[1].endswith((".xml")):
-        return (Action.USE_CONFIG, {})
+        return {"action": "use_config"}
     
     else:
         print("Error: First positional argument must be an input file with a .txt, .csv, or .xml extension.")
