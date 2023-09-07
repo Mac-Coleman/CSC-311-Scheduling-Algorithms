@@ -16,13 +16,23 @@ def parse_arguments(arguments: [str]) -> {str: str}:
     if arguments[1] in ["-v", "--version"]:
         return {"action": "version"}
     
-    if arguments[1].endswith((".txt", ".csv")):
-        return {"action": "use_trace"}
+    if arguments[1].endswith(".xml"):
+        d = {
+            "action" : "use_config",
+            "file" : sys.argv[1]
+            }
+        return d
     
-    elif arguments[1].endswith((".xml")):
-        return {"action": "use_config"}
-    
-    else:
+    elif not arguments[1].endswith((".csv", ".txt")):
         print("Error: First positional argument must be an input file with a .txt, .csv, or .xml extension.")
+        print("Run this program with -h or --help to learn more.")
+        sys.exit(1)
+
+    # Here, the file argument must end with ".csv" or ".txt"
+    assert arguments[1].endswith((".csv", ".txt"))
+
+    if len(arguments) <= 2:
+        print("Error: no algorithm provided.")
+        print("When a trace file is given as input, an algorithm and required options must be specified.")
         print("Run this program with -h or --help to learn more.")
         sys.exit(1)
