@@ -33,7 +33,7 @@ def parse_trace(file_name, sort_arrival=False):
 def simulate_fcfs(file_name: str) -> Schedule:
     arriving_processes: [Process] = parse_trace(file_name, sort_arrival=True)
     
-    cpu_time: int = 0
+    cpu_time: int = arriving_processes[0].arrival_time
     execution_schedule: Schedule = Schedule()
 
     for arriving_process in arriving_processes:
