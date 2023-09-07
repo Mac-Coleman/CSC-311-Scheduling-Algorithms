@@ -1,7 +1,5 @@
-from dataclasses import dataclass
 from process import Process
 
-@dataclass
 class Schedule:
     """
     The schedule class is a dataclass wrapper that is intended to hold a list of process objects in the order in which
