@@ -6,7 +6,41 @@ This file must be run in order to start the simulator.
 import argparse
 import sys
 import pandas as pd
-import process
+
+from process import Process
+from schedule import Schedule
+
+# parses the trace file and returns a list of process objects
+# can choose to sort by arrival date
+def parse_trace(file_name, sort_arrival=False):
+    '''
+    file_name: exact file name
+    sort_arrival: boolean value if you need to sort by arrival time
+    '''
+    df = pd.read_csv(file_name, header=None)
+    if sort_arrival:
+        df = df.sort_values(df.columns[1])
+    
+    processes = []
+    for i in df[0].index.values.tolist():
+        # goes by the row of the trace file and makes a process object
+        processes.append(Process(df[0][i], 
+                                         df[1][i],
+                                         df[2][i],
+                                         df[3][i]))
+    return processes
+
+def simulate_fcfs(file_name: str) -> Schedule:
+    arriving_processes: [Process] = parse_trace(file_name, sort_arrival=True)
+    
+    cpu_time: int = arriving_processes[0].arrival_time
+    execution_schedule: Schedule = Schedule()
+
+    for arriving_process in arriving_processes:
+        execution_schedule.add_execution_record(arriving_process.to_record(cpu_time, arriving_process.burst_time))
+        cpu_time += arriving_process.burst_time
+        
+    return execution_schedule
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="Scheduling Algorithm Simulator", description="A program to simulate various process scheduling algorithms")
@@ -36,23 +70,8 @@ if __name__ == "__main__":
         print("Algorithms can not be specified when a .xml file is the input.")
         sys.exit(1)
 
-# parses the trace file and returns a list of process objects
-# can choose to sort by arrival date
-def parse_trace(file_name, sort_arrival=False):
-    '''
-    file_name: exact file name
-    sort_arrival: boolean value if you need to sort by arrival time
-    '''
-    df = pd.read_csv(file_name, header=None)
-    if sort_arrival:
-        df = df.sort_values(df.columns[1])
-    
-    processes = []
-    for i in df[0].index.values.tolist():
-        # goes by the row of the trace file and makes a process object
-        processes.append(process.Process(df[0][i], 
-                                         df[1][i],
-                                         df[2][i],
-                                         df[3][i]))
-    return processes
-    
+    if argument_namespace.input.endswith((".txt", ".csv")):
+        # Run the simulator on a single input file.
+        
+        execution_schedule = simulate_fcfs(argument_namespace.input)
+        print(execution_schedule.process_records)
