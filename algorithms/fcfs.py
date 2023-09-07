@@ -1,3 +1,7 @@
+"""
+Assigned maintainer: Mac
+"""
+
 from process import Process, ProcessExecutionRecord
 from trace_parser import parse_trace
 

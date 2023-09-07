@@ -1,3 +1,7 @@
+"""
+Assigned maintainer: Brodie
+"""
+
 import pandas as pd
 
 from process import Process
