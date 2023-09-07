@@ -10,14 +10,17 @@ class Schedule:
     processes: [Process]
     current: int = 0
 
-    def peek(self):
+    def peek(self) -> Process:
         if self.current >= len(self.processes):
             raise IndexError("Attempted to peek next process but there are no processes remaining.")
         return self.processes[self.current]
     
-    def next(self):
+    def next(self) -> Process:
         if self.current >= len(self.processes):
             raise IndexError("Attempted to get next process but there are no processes remaining.")
         v = self.processes[self.current]
         self.current += 1
         return v
+    
+    def __len__(self) -> int:
+        return len(self.processes)
