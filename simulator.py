@@ -8,6 +8,7 @@ import sys
 import pandas as pd
 
 from process import Process
+from schedule import Schedule
 
 # parses the trace file and returns a list of process objects
 # can choose to sort by arrival date
@@ -29,7 +30,7 @@ def parse_trace(file_name, sort_arrival=False):
                                          df[3][i]))
     return processes
 
-def simulate(file_name):
+def simulate(file_name: str) -> Schedule:
     pass
 
 if __name__ == "__main__":
