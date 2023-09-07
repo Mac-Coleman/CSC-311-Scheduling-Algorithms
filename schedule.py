@@ -1,4 +1,4 @@
-from process import Process, ProcessExecutionRecord
+from process import ProcessExecutionRecord
 
 class Schedule:
     """
@@ -23,6 +23,9 @@ class Schedule:
         v = self.process_records[self.current]
         self.current += 1
         return v
+    
+    def add_execution_record(self, record: ProcessExecutionRecord) -> None:
+        self.process_records.append(record)
     
     def __len__(self) -> int:
         return len(self.process_records)
