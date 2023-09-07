@@ -1,7 +1,5 @@
 from dataclasses import dataclass
 
-
-
 @dataclass
 class ProcessExecutionRecord:
     pid: int
@@ -18,8 +16,6 @@ class Process:
 
     def to_record(self, execution_start_time: int, execution_burst_time: int) -> ProcessExecutionRecord:
         return ProcessExecutionRecord(self.pid, execution_start_time, execution_burst_time, self.priority)
-
-    
 
 if __name__ == "__main__":
     p = Process(5, 2, 3, None)
