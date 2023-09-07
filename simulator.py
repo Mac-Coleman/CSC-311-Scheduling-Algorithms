@@ -6,7 +6,8 @@ This file must be run in order to start the simulator.
 import argparse
 import sys
 import pandas as pd
-import process
+
+from process import Process
 
 # parses the trace file and returns a list of process objects
 # can choose to sort by arrival date
@@ -22,7 +23,7 @@ def parse_trace(file_name, sort_arrival=False):
     processes = []
     for i in df[0].index.values.tolist():
         # goes by the row of the trace file and makes a process object
-        processes.append(process.Process(df[0][i], 
+        processes.append(Process(df[0][i], 
                                          df[1][i],
                                          df[2][i],
                                          df[3][i]))
