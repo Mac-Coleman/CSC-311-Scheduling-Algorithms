@@ -17,16 +17,26 @@ If either of the above flags are unset, it is assumed that you want to run the s
 `INPUT_FILE` is a required positional argument. It should be either the path to a .csv or .txt trace file, or the path to a .xml config file.
 
 If `INPUT_FILE` is a .xml file, no further arguments are required, and an error will be produced if more are specified.
-If `INPUT_FILE` is a .csv or .txt trace file, the `ALGORITHM` option is required. Depending on the value of `ALGORITHM`, additional
+If `INPUT_FILE` is a .csv or .txt trace file, the `ALGORITHM` argument is required. Depending on the value of `ALGORITHM`, additional
 `PARAMETER`s might be required. The following table displays the available algorithms, which can be specified using either
 the algorithm number or name.
+
+### Supported Algorithms
 
 |Number|Name|Description|Required Arguments|
 |---|---|---|---|
 |1|fcfs|First-come, first-serve. Processes that arrive first are scheduled and executed first.|None|
-|2|rr|Round robin.|quantum: the maximum burst time each process can use before it is evicted from the processor.|
+|2|rr|Round robin.|`QUANTUM`: the maximum burst time each process can use before it is evicted from the processor.|
 |3|sjf_co|Shortest Job First, without preemption.|None|
 |4|sjf_pr|Shortest Job First, with preemption.|None|
+
+### Examples
+
+* `python simulator.py -v` prints version information to standard output.
+* `python simulator.py -h` prints usage information to standard output.
+* `python simulator.py trace.txt fcfs` runs the simulator on the process trace in trace.txt, with the first-come-first-serve algorithm.
+* `python simulator.py config.xml` runs the simulator based on the settings contained in the config.xml file.
+* `python simulator.py trace.csv rr 4` runs the simulator on the process trace in trace.csv, with the round robin scheduling algorithm with a maximum burst time of 4 units.
 
 ## Input Formats
 
