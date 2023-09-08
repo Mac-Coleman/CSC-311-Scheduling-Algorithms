@@ -6,11 +6,26 @@ This project provides a simulator for different scheduling algorithms.
 
 ## Usage
 
-To run the program, simply open your terminal and run `python simulator.py <input> <algorithm>`.
-The command line arguments are explained below.
+The accepted command line arguments are of the form `simulator.py [-v | -h] INPUT_FILE [ALGORITHM [PARAMETERS ...]]`
 
-* `input`: The file from which input will be read, in .csv, .txt, or .xml format.
-* `algorithm`: The algorithm to use in simulating the trace. This argument can not be specified if an xml file is the input.
+Optional arguments:
+* `-h`, `--help`: display usage information about the program
+* `-v`, `--version`: display version information 
+
+If either of the above flags are unset, it is assumed that you want to run the simulator.
+`INPUT_FILE` is a required positional argument. It should be either the path to a .csv or .txt trace file, or the path to a .xml config file.
+
+If `INPUT_FILE` is a .xml file, no further arguments are required, and an error will be produced if more are specified.
+If `INPUT_FILE` is a .csv or .txt trace file, the `ALGORITHM` option is required. Depending on the value of `ALGORITHM`, additional
+`PARAMETER`s might be required. The following table displays the available algorithms, which can be specified using either
+the algorithm number or name.
+
+|Number|Name|Description|Required Arguments|
+|---|---|---|---|
+|1|fcfs|First-come, first-serve. Processes that arrive first are scheduled and executed first.|None|
+|2|rr|Round robin.|quantum: the maximum burst time each process can use before it is evicted from the processor.|
+|3|sjf-co|Shortest Job First, without preemption.|None|
+|4|sjf-pr|Shortest Job First, with preemption.|None|
 
 ## Input Formats
 
