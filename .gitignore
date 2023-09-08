@@ -7,6 +7,12 @@
 __pycache__
 *.pyc
 
+# We also don't need to be committing editor settings.
+.vscode
+
+# Or mypy's cache.
+.mypy_cache
+
 # Also, we don't want binary files (at least, not without GitLFS
 *.pdf
 *.docx
