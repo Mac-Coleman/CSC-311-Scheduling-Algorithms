@@ -2,7 +2,7 @@
 Assigned maintainer: Brodie
 """
 
-import pandas as pd
+import random as pd
 
 from process import Process
 

@@ -5,38 +5,43 @@ This script contains the parse_arguments function, which should return a namespa
 that the calling function will be able to decide what actions to take.
 """
 
-import argparse # We can't use argparse, need to get rid of it.
+
 import sys
 
+def parse_arguments(arguments: [str]) -> {str: str}:
 
-def parse_arguments(arguments: [str]):
-    parser = argparse.ArgumentParser(prog="Scheduling Algorithm Simulator", description="A program to simulate various process scheduling algorithms")
+    if len(arguments) <= 1 or arguments[1] in ["-h", "--help"]:
+        return {"action": "help"}
+    
+    if arguments[1] in ["-v", "--version"]:
+        return {"action": "version"}
+    
+    if arguments[1].endswith(".xml"):
+        d = {
+            "action" : "use_config",
+            "file" : sys.argv[1]
+            }
+        return d
+    
+    elif not arguments[1].endswith((".csv", ".txt")):
+        print("Error: First positional argument must be an input file with a .txt, .csv, or .xml extension.")
+        print("Run this program with -h or --help to learn more.")
+        sys.exit(1)
 
-    # We want a version parameter just so the user can check the version.
-    parser.add_argument("-v", "--version", action="version", version="%(prog)s v0.0.1")
+    # Here, the file argument must end with ".csv" or ".txt"
+    assert arguments[1].endswith((".csv", ".txt"))
 
-    # The program must take one positional argument, the input .txt or .xml file
-    # So here it is added as a single positional argument.
-    parser.add_argument("input", action="store", help="either a .txt trace file or a .xml file containing inputs")
-
-    # Depending on the `input` argument, the algorithm argument may or may not be needed.
-    # Here nargs is set to "?" so argparse knows that it is okay if this argument is not present.
-    parser.add_argument("algorithm", action="store", nargs="?", help="the algorithm to use.")
-
-    argument_namespace = parser.parse_args()
-    print(argument_namespace)
-
-    # We need to validate the inputs so that the user understands what the program can accept.
-    if not argument_namespace.input.endswith((".txt", ".csv", ".xml")):
-        print(f"{argument_namespace.input} is not a valid input file.")
-        print("Valid input file types: .txt, .csv, .xml")
+    if len(arguments) <= 2:
+        print("Error: no algorithm provided.")
+        print("When a trace file is given as input, an algorithm and required options must be specified.")
+        print("Run this program with -h or --help to learn more.")
         sys.exit(1)
     
-    if argument_namespace.input.endswith(".xml") and argument_namespace.algorithm is not None:
-        print(f"Invalid argument: {argument_namespace.algorithm}")
-        print("Algorithms can not be specified when a .xml file is the input.")
-        sys.exit(1)
+    d = {
+        "action" : "use_trace",
+        "file" : sys.argv[1],
+        "algorithm" : sys.argv[2],
+        "parameters" : sys.argv[3:]
+    }
 
-    if argument_namespace.input.endswith((".txt", ".csv")):
-        # Run the simulator on a single input file.
-        pass
+    return d
