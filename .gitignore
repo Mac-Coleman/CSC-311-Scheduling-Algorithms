@@ -18,3 +18,7 @@ __pycache__
 *.ico
 *.mp4
 *.mp3
+
+# And we also shouldn't be committing the outputs of our program.
+schedule.txt
+wait_times.txt
