@@ -48,9 +48,14 @@ def handle_trace(arguments: {}):
     processes = parse_trace(arguments["file"], True)
     (schedule, waiting_times) = simulate_scheduler(processes, arguments["algorithm"], arguments["parameters"])
     write_output(schedule, waiting_times)
-    print(schedule)
 
-    print(waiting_times)
+    print("Schedule:")
+    for record in schedule:
+        print(record)
+    
+    print("\nWaiting times:")
+    for (key, value) in waiting_times.items():
+        print(f"pid: {key}, time: {value}")
 
 def handle_config(arguments: {}):
     pass

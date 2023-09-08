@@ -12,6 +12,9 @@ def simulate_fcfs(arriving_processes: [Process], args: list) -> [ProcessExecutio
     waiting_times: {int: int} = {}
 
     for arriving_process in arriving_processes:
+
+        if cpu_time < arriving_process.arrival_time:
+            cpu_time = arriving_process.arrival_time
         execution_schedule.append(arriving_process.to_record(cpu_time, arriving_process.burst_time))
         waiting_times[arriving_process.pid] = cpu_time - arriving_process.arrival_time
         cpu_time += arriving_process.burst_time
