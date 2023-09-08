@@ -2,8 +2,6 @@
 Assigned maintainer: Brodie
 """
 
-import random as pd
-
 from process import Process
 import math
 
