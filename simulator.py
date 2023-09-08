@@ -49,7 +49,11 @@ def handle_trace(arguments: {}):
     (schedule, waiting_times) = simulate_scheduler(processes, arguments["algorithm"], arguments["parameters"])
     write_output(schedule, waiting_times)
 
-    print("Schedule:")
+    print("Arriving processes:")
+    for process in processes:
+        print(process)
+
+    print("\nSchedule:")
     for record in schedule:
         print(record)
     
