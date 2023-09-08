@@ -6,7 +6,8 @@ This project provides a simulator for different scheduling algorithms.
 
 ## Usage
 
-The accepted command line arguments are of the form `simulator.py [-v | -h] INPUT_FILE [ALGORITHM [PARAMETERS ...]]`
+The accepted command line arguments are of the following form:
+`python simulator.py [-v | -h] INPUT_FILE [ALGORITHM [PARAMETERS ...]]`
 
 Optional arguments:
 * `-h`, `--help`: display usage information about the program
@@ -24,8 +25,8 @@ the algorithm number or name.
 |---|---|---|---|
 |1|fcfs|First-come, first-serve. Processes that arrive first are scheduled and executed first.|None|
 |2|rr|Round robin.|quantum: the maximum burst time each process can use before it is evicted from the processor.|
-|3|sjf-co|Shortest Job First, without preemption.|None|
-|4|sjf-pr|Shortest Job First, with preemption.|None|
+|3|sjf_co|Shortest Job First, without preemption.|None|
+|4|sjf_pr|Shortest Job First, with preemption.|None|
 
 ## Input Formats
 
