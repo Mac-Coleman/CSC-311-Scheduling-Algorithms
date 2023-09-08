@@ -44,7 +44,10 @@ def handle_version(arguments: {}):
     print(f"{name} {version}")
 
 def handle_trace(arguments: {}):
-    pass
+    
+    processes = parse_trace(arguments["file"], True)
+    (schedule, waiting_times) = simulate_scheduler(processes, arguments["algorithm"], arguments["parameters"])
+    write_output(schedule, waiting_times)
 
 def handle_config(arguments: {}):
     pass
