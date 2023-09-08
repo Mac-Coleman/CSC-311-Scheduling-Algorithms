@@ -49,9 +49,10 @@ As inputs, .txt and .csv files should contain traces of processes for the simula
 
 All of the above values must be non-negative integers.
 
-The following is an example of a trace written in the .csv format.
+The following is an example of a trace written in the .csv/.txt format.
+Please note that the columns *do not* have headers. Please do not include headers in your .csv/.txt trace files.
+An error will be produced if you do.
 ```
-PID,arrival_time,cpu_bursts
 1,4,10
 2,1,20
 5,9,32
