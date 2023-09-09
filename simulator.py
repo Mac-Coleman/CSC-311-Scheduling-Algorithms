@@ -46,13 +46,14 @@ def handle_version(arguments: dict[str, str | list[str]]) -> None:
 
 def handle_trace(arguments: dict[str, str | list[str]]) -> None:
     
-    processes = parse_trace(cast(str, arguments["file"]), True)
-    (schedule, waiting_times) = simulate_scheduler(processes, cast(str, arguments["algorithm"]), cast(list[str], arguments["parameters"]))
-    write_output(schedule, waiting_times)
+    processes = parse_trace(cast(str, arguments["file"]))
 
     print("Arriving processes:")
     for process in processes:
         print(process)
+        
+    (schedule, waiting_times) = simulate_scheduler(processes, cast(str, arguments["algorithm"]), cast(list[str], arguments["parameters"]))
+    write_output(schedule, waiting_times)
 
     print("\nSchedule:")
     for record in schedule:
