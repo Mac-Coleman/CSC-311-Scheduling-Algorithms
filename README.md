@@ -71,10 +71,11 @@ The function of .xml files as input is not yet decided.
 ## Output files
 
 The program will produce two output files, `schedule.txt`, and `wait_times.txt`.
-`schedule.txt` is a comma-separated-value file in which each line represents a process that was executed on the CPU.
-The lines of `schedule.txt` are arranged in order, so the first process to have been run will be the first process line, the second line will be the second process to run, and so on.
 
 ### schedule.txt
+
+`schedule.txt` is a comma-separated-value file in which each line represents a process that was executed on the CPU.
+The lines of `schedule.txt` are arranged in order, so the first process to have been run will be the first process line, the second line will be the second process to run, and so on.
 
 The exact columns of `schedule.txt` are as follows:
 
