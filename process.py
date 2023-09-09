@@ -23,7 +23,7 @@ class Process:
         """
         return ProcessExecutionRecord(self.pid, execution_start_time, execution_burst_time, self.burst_time, self.priority)
     
-    def execute(self, time: int):
+    def execute(self, time: int) -> None:
         """
         Decrements the remaining burst time of the process by [time] units.
         Used to simulate execution of a process.

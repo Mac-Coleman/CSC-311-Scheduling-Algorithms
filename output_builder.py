@@ -19,7 +19,7 @@ def write_output(records: list[ProcessExecutionRecord], waiting_times: dict[int,
         wait_times_file.write(f"{pid},{waiting_times[pid]}\n")
     wait_times_file.close()
 
-def print_output_data(records, waiting_times):
+def print_output_data(records: list[ProcessExecutionRecord], waiting_times: dict[int, int]) -> None:
     pass
 
 if __name__ == "__main__":

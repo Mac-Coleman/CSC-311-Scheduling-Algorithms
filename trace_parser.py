@@ -7,7 +7,7 @@ import math
 
 # parses the trace file and returns a list of process objects
 # output is a list of process objects that are sorted by arrival time
-def parse_trace(file_name, arrival_time_cutoff=math.inf):
+def parse_trace(file_name: str, arrival_time_cutoff: int | float = math.inf) -> list[Process]:
     '''
     file_name: exact file name
     arrival_time_cutoff:
@@ -22,11 +22,11 @@ def parse_trace(file_name, arrival_time_cutoff=math.inf):
     for line in process_lines:
         # variables are specified for readability
         # split at commas due to csv file format
-        line = line.split(',')
-        process_list.append(Process(pid=int(line[0]), 
-                                 arrival_time=int(line[1]),
-                                 burst_time=int(line[2]),
-                                 priority=int(line[3])))
+        cells = line.split(',')
+        process_list.append(Process(pid=int(cells[0]), 
+                                 arrival_time=int(cells[1]),
+                                 burst_time=int(cells[2]),
+                                 priority=int(cells[3])))
     trace.close()
 
     # starts the sorting and organizing of the process list
@@ -48,7 +48,7 @@ def parse_trace(file_name, arrival_time_cutoff=math.inf):
 
 
 
-def quick_sort(processes, low, high):
+def quick_sort(processes: list[Process], low: int, high: int) -> list[Process]:
     if low < high:
         pivot = processes[high].arrival_time
         i = low-1

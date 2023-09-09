@@ -5,7 +5,7 @@ Assigned maintainer: Mac
 from process import Process, ProcessExecutionRecord
 from trace_parser import parse_trace
 
-def simulate_fcfs(arriving_processes: list[Process], args: list) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
+def simulate_fcfs(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
     
     cpu_time: int = arriving_processes[0].arrival_time
     execution_schedule: list[ProcessExecutionRecord] = []
