@@ -71,8 +71,6 @@ if __name__ == "__main__":
     arguments = parse_arguments(sys.argv)
     # Decide what to do based on parsed arguments...
 
-    # print(arguments)
-
     match arguments["action"]:
         case "help":
             handle_help(arguments)
