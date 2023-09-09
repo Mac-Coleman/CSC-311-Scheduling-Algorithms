@@ -42,24 +42,53 @@ the algorithm number or name.
 
 ### Text / Comma-Separated Value (.txt, .csv)
 
-As inputs, .txt and .csv files should contain traces of processes for the simulator to run. At a minimum, the required columns are:
+As inputs, .txt and .csv files should contain traces of processes for the simulator to run.
+All .csv and .txt files *must* contain these four columns, in exactly this order, from left to right:
+
 * PID: Process ID
 * arrival_time: The time at which the process arrives to be scheduled.
 * cpu_bursts: The remaining length of the process until it is terminated.
+* priority: The priority of the process. This is *required*, even if you do not intend to use an algorithm that requires priority. It will simply be ignored.
 
-All of the above values must be non-negative integers.
+All of the values in each column *must* be non-negative integers.
+Processes with lower numbers in the priority column are considered higher priority than those with a high number in the priority column.
 
 The following is an example of a trace written in the .csv/.txt format.
 Please note that the columns *do not* have headers. Please do not include headers in your .csv/.txt trace files.
 An error will be produced if you do.
 ```
-1,4,10
-2,1,20
-5,9,32
-7,9,19
-8,3,15
+1,4,10,4
+2,1,20,4
+5,9,32,5
+7,9,19,9
+8,3,15,2
 ```
 
 ### Extensible Markup Language (.xml)
 
 The function of .xml files as input is not yet decided.
+
+## Output files
+
+The program will produce two output files, `schedule.txt`, and `wait_times.txt`.
+`schedule.txt` is a comma-separated-value file in which each line represents a process that was executed on the CPU.
+The lines of `schedule.txt` are arranged in order, so the first process to have been run will be the first process line, the second line will be the second process to run, and so on.
+
+### schedule.txt
+
+The exact columns of `schedule.txt` are as follows:
+
+* PID: The process ID of the process that was executed.
+* Start time: The time at which the process began executing.
+* Burst length: The number of CPU bursts that the process executed before it left the processor.
+* Time remaining: The number of CPU bursts that had yet to be completed by the time the process left the processor.
+
+### wait_times.txt
+
+`wait_times.txt` is a comma-separated-value file in which each line represents a process that was executed on the CPU.
+This file will only contain one line for each process in the trace file, with two columns in each line.
+
+The columns of `wait_times.txt` are as follows:
+
+* PID: The process ID of the process that was executed.
+* Wait time: The amount of CPU time units that the process spent waiting in the ready queue, not being executed, before it was completed.
