@@ -4,7 +4,7 @@ Assigned maintainer: Brodie
 
 from process import ProcessExecutionRecord
 
-def write_output(records: [ProcessExecutionRecord], waiting_times: {int : int}) -> None:
+def write_output(records: list[ProcessExecutionRecord], waiting_times: dict[int, int]) -> None:
     # creates the schedule file
     # writes the execution record information
     schedule_file = open("schedule.txt", 'w')
@@ -27,7 +27,7 @@ if __name__ == "__main__":
 
     test_records = []
     for i in range(10):
-        test_records.append(ProcessExecutionRecord(i, i*3, i*2, i))
+        test_records.append(ProcessExecutionRecord(i, i*3, i*2, i, None))
 
     write_output(test_records, wait_times)
     

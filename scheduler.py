@@ -12,7 +12,7 @@ from algorithms.rr import simulate_rr
 from algorithms.sjf_co import simulate_sjf_co
 from algorithms.sjf_pr import simulate_sjf_pr
 
-def simulate_scheduler(processes: [Process], algorithm: str, parameters: [str]) -> ([ProcessExecutionRecord], {int, int}):
+def simulate_scheduler(processes: list[Process], algorithm: str, parameters: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
     algoDict={ # dictionary with possible algorithm inputs as keys, and pointers to the correct algorithm function as values
         "fcfs":simulate_fcfs,
         "rr":simulate_rr,        
