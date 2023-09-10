@@ -8,7 +8,7 @@ that the calling function will be able to decide what actions to take.
 
 import sys
 
-def parse_arguments(arguments: [str]) -> {str: str}:
+def parse_arguments(arguments: list[str]) -> dict[str, str | list[str]]:
 
     if len(arguments) <= 1 or arguments[1] in ["-h", "--help"]:
         return {"action": "help"}
@@ -17,11 +17,11 @@ def parse_arguments(arguments: [str]) -> {str: str}:
         return {"action": "version"}
     
     if arguments[1].endswith(".xml"):
-        d = {
+        c: dict[str, str | list[str]] = {
             "action" : "use_config",
             "file" : sys.argv[1]
             }
-        return d
+        return c
     
     elif not arguments[1].endswith((".csv", ".txt")):
         print("Error: First positional argument must be an input file with a .txt, .csv, or .xml extension.")
@@ -37,7 +37,7 @@ def parse_arguments(arguments: [str]) -> {str: str}:
         print("Run this program with -h or --help to learn more.")
         sys.exit(1)
     
-    d = {
+    d: dict[str, str | list[str]] = {
         "action" : "use_trace",
         "file" : sys.argv[1],
         "algorithm" : sys.argv[2],

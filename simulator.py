@@ -4,6 +4,7 @@ This file must be run in order to start the simulator.
 """
 
 import sys
+from typing import cast
 
 from cli_parser import parse_arguments
 from trace_parser import parse_trace
@@ -37,16 +38,16 @@ help_string = "{} {}\n" \
     "See the README for more help.\n" \
     "Source online: <https://github.com/Mac-Coleman/CSC-311-Scheduling-Algorithms>"
 
-def handle_help(arguments: {}):
+def handle_help(arguments: dict[str, str | list[str]]) -> None:
     print(help_string.format(name, version, sys.argv[0], sys.argv[0], sys.argv[0]))
 
-def handle_version(arguments: {}):
+def handle_version(arguments: dict[str, str | list[str]]) -> None:
     print(f"{name} {version}")
 
-def handle_trace(arguments: {}):
+def handle_trace(arguments: dict[str, str | list[str]]) -> None:
     
-    processes = parse_trace(arguments["file"], True)
-    (schedule, waiting_times) = simulate_scheduler(processes, arguments["algorithm"], arguments["parameters"])
+    processes = parse_trace(cast(str, arguments["file"]), True)
+    (schedule, waiting_times) = simulate_scheduler(processes, cast(str, arguments["algorithm"]), cast(list[str], arguments["parameters"]))
     write_output(schedule, waiting_times)
 
     print("Arriving processes:")
@@ -61,7 +62,7 @@ def handle_trace(arguments: {}):
     for (key, value) in waiting_times.items():
         print(f"pid: {key}, time: {value}")
 
-def handle_config(arguments: {}):
+def handle_config(arguments: dict[str, str | list[str]]) -> None:
     pass
 
 if __name__ == "__main__":
