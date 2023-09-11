@@ -29,6 +29,9 @@ def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[lis
         # Add the processes that arrived during the time quantum to the ready queue
         # Readd the current process to the ready queue if it has any time remaining.
 
+        print(f"next_process:{next_process}, len(arriving_processes): {len(arriving_processes)}")
+        print(f"time: {cpu_time}")
+        
         current_process = ready_queue.pop(0)
 
         start_time = cpu_time
@@ -36,6 +39,12 @@ def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[lis
         cpu_time += burst_time
 
         schedule.append(current_process.to_record(start_time, burst_time))
+        
+        for process in ready_queue:
+            if waiting_times.get(process.pid, None) is not None:
+                waiting_times[process.pid] += 1
+            else:
+                waiting_times[process.pid] = 0
 
         while next_process < len(arriving_processes) and arriving_processes[next_process].arrival_time < cpu_time:
             ready_queue.append(arriving_processes[next_process])
@@ -43,6 +52,12 @@ def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[lis
         
         if current_process.burst_time > 0:
             ready_queue.append(current_process)
+        
+        if len(ready_queue) == 0 and next_process < len(arriving_processes):
+            cpu_time = arriving_processes[next_process].arrival_time # Skip forward to time of next arriving process.
+            while next_process < len(arriving_processes) and arriving_processes[next_process].arrival_time <= cpu_time:
+                ready_queue.append(arriving_processes[next_process])
+                next_process += 1
 
 
     return (schedule, waiting_times)
