@@ -26,6 +26,6 @@ def simulate_scheduler(processes: list[Process], algorithm: str, parameters: lis
         "4":simulate_sjf_pr
     }
     if(algoDict.get(algorithm.lower())!=None): # makes sure the requested algorithm exists, otherwise raises error
-        return algoDict[algorithm.lower()](processes) # returns a tuple with the completed schedule and a dictionary of the wait times
+        return algoDict[algorithm.lower()](processes, parameters) # returns a tuple with the completed schedule and a dictionary of the wait times
     else:
         raise KeyError('Algorithm Not Found')
