@@ -4,10 +4,10 @@ Assigned maintainer: Torii
 
 from process import Process, ProcessExecutionRecord
 
-def simulate_sjf_co(arriving_processes: [Process]) -> ([ProcessExecutionRecord], {int : int}):
-    processes_sorted=[Process]
-    per_list=[ProcessExecutionRecord]
-    wait_times={int:int}
+def simulate_sjf_co(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int,int]]:
+    processes_sorted: list[Process] = []
+    per_list: list[ProcessExecutionRecord] = []
+    wait_times: dict[int,int] = {}
     i=0
     for p in arriving_processes:
         if(p.burst_time<i):
@@ -20,9 +20,10 @@ def simulate_sjf_co(arriving_processes: [Process]) -> ([ProcessExecutionRecord],
         for p in processes_sorted:
             if(p.arrival_time<=clock):
                 if(found==False):
-                    per_list.append(ProcessExecutionRecord(p.pid,clock,p.burst_time))
-                    clock+=p.burst_time
+                    run_time=p.execute(p.burst_time)
+                    per_list.append(p.to_record(clock, run_time))
+                    clock+=run_time
                     wait_times.update({p.pid:(clock-p.arrival_time)})
                     processes_sorted.remove(p)
                     
-    return {per_list,wait_times}
+    return (per_list,wait_times)
