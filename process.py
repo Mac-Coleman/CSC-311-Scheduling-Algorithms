@@ -27,6 +27,7 @@ class Process:
         """
         Decrements the remaining burst time of the process by [time] units.
         Used to simulate execution of a process.
+        Returns the time for which the process was actually executed.
         """
         before = self.burst_time
         self.burst_time = 0 if time >= self.burst_time else self.burst_time - time
