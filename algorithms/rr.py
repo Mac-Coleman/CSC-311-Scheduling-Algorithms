@@ -22,6 +22,9 @@ def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[lis
     ready_queue.append(arriving_processes[0])
     next_process = 1
 
+    for process in arriving_processes:
+        waiting_times[process.pid] = 0
+
     
     while next_process < len(arriving_processes) or len(ready_queue) > 0:
 
@@ -41,10 +44,7 @@ def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[lis
         schedule.append(current_process.to_record(start_time, burst_time))
         
         for process in ready_queue:
-            if waiting_times.get(process.pid, None) is not None:
-                waiting_times[process.pid] += 1
-            else:
-                waiting_times[process.pid] = 0
+            waiting_times[process.pid] += 1
 
         while next_process < len(arriving_processes) and arriving_processes[next_process].arrival_time < cpu_time:
             ready_queue.append(arriving_processes[next_process])
