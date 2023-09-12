@@ -8,13 +8,20 @@ def simulate_sjf_co(arriving_processes: list[Process], args: list[str]) -> tuple
     processes_sorted: list[Process] = []
     per_list: list[ProcessExecutionRecord] = []
     wait_times: dict[int,int] = {}
-    i=0
     for p in arriving_processes:
-        if(p.burst_time<i):
+        i=0
+        while(i<len(processes_sorted)):
+            if(p.burst_time<processes_sorted[i].burst_time):
+                processes_sorted.insert(i,p)
+                i=len(processes_sorted)
+            i+=1
+        if(i==len(processes_sorted)):
             processes_sorted.insert(i,p)
-        else:
-            processes_sorted.insert(i+1,p)
-    clock=0
+
+    clock=0    
+    print(processes_sorted)
+
+
     while(len(processes_sorted)>0):
         found=False
         for p in processes_sorted:
@@ -25,5 +32,7 @@ def simulate_sjf_co(arriving_processes: list[Process], args: list[str]) -> tuple
                     clock+=run_time
                     wait_times.update({p.pid:(clock-p.arrival_time)})
                     processes_sorted.remove(p)
-                    
+                    found=True
+            if(found==False):
+               clock+=1
     return (per_list,wait_times)
