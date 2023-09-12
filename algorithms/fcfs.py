@@ -3,8 +3,17 @@ Assigned maintainer: Mac
 """
 
 from process import Process, ProcessExecutionRecord
+import sys
 
 def simulate_fcfs(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
+
+    if len(args) != 1:
+        print(f"Invalid arguments: {args}")
+        print("First-come-first-serve requires exactly zero arguments.")
+        print("")
+        print("PARAMETERS:")
+        print("\tNone.")
+        sys.exit(1)
     
     cpu_time: int = arriving_processes[0].arrival_time
     execution_schedule: list[ProcessExecutionRecord] = []
