@@ -3,6 +3,7 @@ Assigned maintainer: Mac
 """
 
 from process import Process, ProcessExecutionRecord
+import sys
 
 def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
     # args[0]: QUANTUM - the maximum time a process can use before it is evicted from the processor.
@@ -10,9 +11,25 @@ def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[lis
     quantum: int = 0
 
     if len(args) != 1:
-        raise TypeError()
+        print(f"Invalid arguments: {args}")
+        print("Round robin requires exactly one parameter.")
+        print("")
+        print("PARAMETERS:")
+        print("\t[QUANTUM]:\tThe maximum length of time each process can run for.")
+        sys.exit(0)
+        
+    try:
+        quantum = int(args[0]) # Raise typerror if not possible
+    except ValueError as e:
+        print(f"Invalid argument for QUANTUM: {args[0]}")
+        print("\tQUANTUM must be a positive integer.")
+        sys.exit(0)
     
-    quantum = int(args[0]) # Raise typerror if not possible
+    if quantum <= 0:
+        print(f"Invalid argument for QUANTUM: {args[0]}")
+        print("\tQUANTUM must be a positive integer.")
+        sys.exit(0)
+
 
     schedule: list[ProcessExecutionRecord] = []
     waiting_times: dict[int, int] = {}
