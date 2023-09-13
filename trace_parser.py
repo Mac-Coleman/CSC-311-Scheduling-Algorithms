@@ -15,7 +15,7 @@ def parse_trace(file_name: str, arrival_time_cutoff: int | float = math.inf) -> 
     '''
 
     trace_data: str = ""
-    with open(file_name) as trace:
+    with open(file_name, 'r') as trace:
         trace_data = trace.read()
 
     process_list: list[Process] = []

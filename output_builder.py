@@ -34,7 +34,9 @@ def write_output(records: list[ProcessExecutionRecord], waiting_times: dict[int,
 
     with open("statistics.txt", 'w') as statistics_file:
 
-        statistics_file.write(f"Statistics for {filename}, ran with {algorithm} scheduling:\n\n")
+        algo_name = fullname_dict[algorithm]
+
+        statistics_file.write(f"Statistics for {filename}, ran with {algo_name} scheduling:\n\n")
 
         stats = compute_statistics(list(waiting_times.values()))
         statistics_file.write(f"Minimum wait time:   {stats[0]:.2f}\n")
