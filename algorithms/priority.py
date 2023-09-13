@@ -13,12 +13,12 @@ def simulate_priority(arriving_processes: list[Process], args: list[str]) -> tup
     schedule = []
     
     # Main Loop
-    #   process queue not empty?   process still running?
+    #   process queue not empty?   process still running?    process still in arriving processes?
     while len(process_queue) > 0 or cpu_burst >= 0 or index < len(arriving_processes):
         # admit a new process to queue if it matches the time
         if index < len(arriving_processes) and arriving_processes[index].arrival_time == time:
+            # finds all processes with same arrival time
             same_arrival_time = subset(arriving_processes[index:])
-            print(same_arrival_time)
             for new_process in same_arrival_time:
                 wait_times[new_process.pid] = 0
                 process_queue.append(new_process)
@@ -34,7 +34,6 @@ def simulate_priority(arriving_processes: list[Process], args: list[str]) -> tup
             cpu_burst = current_process.burst_time
             
 
-        
         # when a process finishes
         if cpu_burst == 0:
             # write down the record of the process
@@ -61,7 +60,7 @@ def simulate_priority(arriving_processes: list[Process], args: list[str]) -> tup
 
     return schedule, total_wait_times
 
-### Creates a subset
+### Creates a subset of processes with the same arrival times
 def subset(arriving_processes: list[Process]):
     time = arriving_processes[0].arrival_time
     process_list = []
@@ -87,10 +86,4 @@ def choose_new_process(process_queue):
     return highest
         
 
-
-
-if __name__ == "__main__":
-    process_list = parse_trace("..\\sample_traces\\trace_test_10")
-    print(process_list)
-    simulate_priority(process_list, [])
 
