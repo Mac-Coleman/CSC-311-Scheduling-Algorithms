@@ -9,7 +9,7 @@ def write_output(records: list[ProcessExecutionRecord], waiting_times: dict[int,
     # writes the execution record information
     schedule_file = open("schedule.txt", 'w')
     for record in records:
-        schedule_file.write(f"{record.execution_start_time},{record.pid},{record.burst_time}\n")
+        schedule_file.write(f"{record.execution_start_time},{record.pid},{record.burst_time},{record.time_remaining}\n")
     schedule_file.close()
 
     # creates the waiting times file
