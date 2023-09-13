@@ -57,17 +57,20 @@ def handle_trace(arguments: dict[str, str | list[str]]) -> None:
     #     print(process)
         
     (schedule, waiting_times) = simulate_scheduler(processes, algorithm, parameters)
-    write_output(schedule, waiting_times, filename, algorithm)
+    stats_string = write_output(schedule, waiting_times, filename, algorithm)
 
     print("\nSchedule:")
-    print(f"Timestamp   |  PID    |  Burst time remaining")
+    print(f" Timestamp |     PID    |  Burst time remaining")
     for record in schedule:
-        print(f"{record.execution_start_time} | {record.pid} | {record.time_remaining}")
+        print(f"{record.execution_start_time : 10} | {record.pid : 10} | {record.time_remaining: 10}")
         
     
-    # print("\nWaiting times:")
-    # for (key, value) in waiting_times.items():
-    #     print(f"pid: {key}, time: {value}")
+    print("\nWaiting times:")
+    print(f"    PID    | Waiting Time")
+    for (key, value) in waiting_times.items():
+        print(f"{key : 10} | {value : 10}")
+
+    print("\n" + stats_string)
 
 if __name__ == "__main__":
     

@@ -4,7 +4,7 @@ Assigned maintainer: Brodie
 
 from process import ProcessExecutionRecord
 
-def write_output(records: list[ProcessExecutionRecord], waiting_times: dict[int, int], filename: str, algorithm: str) -> None:
+def write_output(records: list[ProcessExecutionRecord], waiting_times: dict[int, int], filename: str, algorithm: str) -> str:
     # creates the schedule file
     # writes the execution record information
     schedule_file = open("schedule.txt", 'w')
@@ -32,17 +32,20 @@ def write_output(records: list[ProcessExecutionRecord], waiting_times: dict[int,
         "5": "priority"
     }
 
+    algo_name = fullname_dict[algorithm]
+
+    l = f"Statistics for {filename}, with {algo_name} scheduling:\n"
+
+    stats = compute_statistics(list(waiting_times.values()))
+    l += f"    Minimum wait time:   {stats[0]:.2f}\n"
+    l += f"    Mean wait time:      {stats[2]:.2f}\n"
+    l += f"    Maximum wait time:   {stats[1]:.2f}\n"
+    l += f"    Standard deviation:  {stats[3]:.2f}\n"
+    
     with open("statistics.txt", 'w') as statistics_file:
-
-        algo_name = fullname_dict[algorithm]
-
-        statistics_file.write(f"Statistics for {filename}, ran with {algo_name} scheduling:\n\n")
-
-        stats = compute_statistics(list(waiting_times.values()))
-        statistics_file.write(f"Minimum wait time:   {stats[0]:.2f}\n")
-        statistics_file.write(f"Mean wait time:      {stats[2]:.2f}\n")
-        statistics_file.write(f"Maximum wait time:   {stats[1]:.2f}\n")
-        statistics_file.write(f"Standard deviation:  {stats[3]:.2f}\n")
+        statistics_file.write(l)
+    
+    return l
 
 
 def compute_statistics(samples: list[int]) -> tuple[int, int, float, float]:
