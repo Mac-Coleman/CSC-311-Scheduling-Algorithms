@@ -2,6 +2,9 @@ from dataclasses import dataclass
 
 @dataclass
 class ProcessExecutionRecord:
+    """
+    A dataclass used for representing a process being executed.
+    """
     pid: int
     execution_start_time: int
     burst_time: int
@@ -10,6 +13,9 @@ class ProcessExecutionRecord:
 
 @dataclass
 class Process:
+    """
+    A dataclass used for representing a process.
+    """
     pid: int
     arrival_time: int
     burst_time: int

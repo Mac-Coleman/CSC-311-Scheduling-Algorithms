@@ -1,7 +1,3 @@
-"""
-Assigned maintainer: Brodie
-"""
-
 from process import Process
 import math
 import sys

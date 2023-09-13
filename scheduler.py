@@ -1,6 +1,4 @@
 """
-Assigned maintainer: Torii
-
 simulate_scheduler takes a list of processes and the specified algorithm, and returns 
 the tuple that the algorithm functions will all return
 """
