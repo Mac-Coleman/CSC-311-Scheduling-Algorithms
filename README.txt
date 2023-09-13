@@ -52,10 +52,10 @@ TRACE FILE FORMAT SPECIFICATIONS:
 As input .txt and .csv files should contain traces of processes for the simulator to run.
 All .csv and .txt files MUST contain these four columns, in exactly this order, from left to right:
 
-PID: Process ID
-arrival_time: The time at which the process arrives to be scheduled.
-cpu_bursts: The remaining length of the process until it is terminated.
-priority: The priority of the process. This is required, even if you do not intend to use an algorithm that requires priority. It will simply be ignored.
+  PID: Process ID
+  arrival_time: The time at which the process arrives to be scheduled.
+  cpu_bursts: The remaining length of the process until it is terminated.
+  priority: The priority of the process. This is required, even if you do not intend to use an algorithm that requires priority. It will simply be ignored.
 
 All of the values in each column MUST be non-negative integers.
 Processes with lower numbers in the priority column are considered higher priority than those with a high number in the priority column.
@@ -84,7 +84,7 @@ schedule.txt
   The lines of schedule.txt are arranged in order, so the first process to have been run will be the first process line,
   the second line will be the second process to run, and so on.
 
-  The exact columns of schedule.txt are as follows:
+  The exact columns of schedule.txt are as follows, from left to right:
 
     Timestamp: The time at which the process began executing.
     PID: The PID of the process that was executed.
