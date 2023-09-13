@@ -28,3 +28,4 @@ __pycache__
 # And we also shouldn't be committing the outputs of our program.
 schedule.txt
 wait_times.txt
+statistics.txt

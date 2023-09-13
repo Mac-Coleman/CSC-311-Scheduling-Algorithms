@@ -45,15 +45,19 @@ def handle_version(arguments: dict[str, str | list[str]]) -> None:
     print(f"{name} {version}")
 
 def handle_trace(arguments: dict[str, str | list[str]]) -> None:
+
+    filename = cast(str, arguments["file"])
+    algorithm = cast(str, arguments["algorithm"])
+    parameters = cast(list[str], arguments["parameters"])
     
-    processes = parse_trace(cast(str, arguments["file"]))
+    processes = parse_trace(filename)
 
     print("Arriving processes:")
     for process in processes:
         print(process)
         
-    (schedule, waiting_times) = simulate_scheduler(processes, cast(str, arguments["algorithm"]), cast(list[str], arguments["parameters"]))
-    write_output(schedule, waiting_times)
+    (schedule, waiting_times) = simulate_scheduler(processes, algorithm, parameters)
+    write_output(schedule, waiting_times, filename, algorithm)
 
     print("\nSchedule:")
     for record in schedule:
