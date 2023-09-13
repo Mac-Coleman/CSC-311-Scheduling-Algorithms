@@ -1,7 +1,3 @@
-"""
-Assigned maintainer: Torii
-"""
-
 from process import Process, ProcessExecutionRecord
 import math
 

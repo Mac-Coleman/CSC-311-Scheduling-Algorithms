@@ -1,7 +1,3 @@
-"""
-Assigned maintainer: Mac
-"""
-
 from process import Process, ProcessExecutionRecord
 import sys
 

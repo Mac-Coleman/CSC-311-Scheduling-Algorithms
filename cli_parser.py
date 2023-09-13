@@ -1,6 +1,4 @@
 """
-Assigned maintainer: Mac
-
 This script contains the parse_arguments function, which should return a namespace of arguments so
 that the calling function will be able to decide what actions to take.
 """
