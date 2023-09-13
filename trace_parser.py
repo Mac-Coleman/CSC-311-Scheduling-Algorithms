@@ -3,16 +3,11 @@ Assigned maintainer: Brodie
 """
 
 from process import Process
-import math
 import sys
 
 # parses the trace file and returns a list of process objects
 # output is a list of process objects that are sorted by arrival time
-def parse_trace(file_name: str, arrival_time_cutoff: int | float = math.inf) -> list[Process]:
-    '''
-    file_name: exact file name
-    arrival_time_cutoff:
-    '''
+def parse_trace(file_name: str) -> list[Process]:
 
     trace_data: str = ""
     with open(file_name) as trace:
@@ -58,23 +53,11 @@ def parse_trace(file_name: str, arrival_time_cutoff: int | float = math.inf) -> 
 
     # starts the sorting and organizing of the process list
     sorted_process_list = quick_sort(process_list, 0, len(process_list)-1)
-    max_arrival_time = sorted_process_list[-1].arrival_time
-    if arrival_time_cutoff >= max_arrival_time:
-        # normal return statement
-        return sorted_process_list
-    
-    # if the user specifies a max arrival time
-    cutoff_index = max_arrival_time
-    for i, process in enumerate(sorted_process_list):
-        if process.arrival_time > arrival_time_cutoff:
-            cutoff_index = i-1
-            break
 
-    # return for shortened process list
-    return sorted_process_list[:cutoff_index]
+    return sorted_process_list
 
 
-
+### Sorting processes by arrival times
 def quick_sort(processes: list[Process], low: int, high: int) -> list[Process]:
     if low < high:
         pivot = processes[high].arrival_time
@@ -94,10 +77,5 @@ def quick_sort(processes: list[Process], low: int, high: int) -> list[Process]:
 
     return processes
 
-if __name__ == "__main__":
-    process_list = parse_trace("sample_traces\\trace_test_100.csv", arrival_time_cutoff=50)
-    for process in process_list:
-        print("arrival time: ", process.arrival_time)
-        print("pid: ", process.pid)
 
     
