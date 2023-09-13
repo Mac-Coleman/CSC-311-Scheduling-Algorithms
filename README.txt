@@ -113,3 +113,25 @@ Errors that we have determined are incompatible with continuing the program will
 However, errors which can be corrected or ignored will allow the program to continue without the erroneous information.
 For example, trace files containing invalid lines will simply have their invalid lines ignored,
 unless all lines are invalid, in which case the simulator will not run.
+
+SAMPLE TRACES:
+
+Examples of trace files are included with this project.
+
+  trace_test_10.csv, trace_test_100.csv, and trace_test_1000.csv each contain
+    10, 100, and 1000 lines of processes to simulate, with differing arrival times, lengths, and priorities.
+    They are good examples of well-formed input trace files.
+
+  gaps.csv is a trace file containing two processes, in which there is a long gap between the end of the
+    first process and the beginning of the second. It is intended to verify that the simulator can handle
+    gaps in between processes.
+
+  same_arrival.csv is a trace file containing several processes that start at the same time.
+    It is intended to verify that the simulator can handle processes arriving simultaneously.
+
+  invalid.csv is an example of trace file that is not-well-formed. It will produce error messages,
+    but some of its lines can be interpreted and run.
+  
+  all_invalid.csv is an example of a trace file that is extremely poorly-formed. Not a single line
+    can be correctly interpreted, and it will produce an error message that the simulator can not
+    continue.
