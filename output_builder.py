@@ -25,11 +25,13 @@ def write_output(records: list[ProcessExecutionRecord], waiting_times: dict[int,
         "sjf_co": "shortest-job-first",
         "sjf_pr": "shortest-job-first with preemption",
         "priority": "priority",
+        "priority_pr": "priority with preemption",
         "1": "first come first serve",
         "2": "round robin",
         "3": "shortest-job-first",
         "4": "shortest-job-first with preemption",
-        "5": "priority"
+        "5": "priority",
+        "6": "priority with preemption"
     }
 
     algo_name = fullname_dict[algorithm]

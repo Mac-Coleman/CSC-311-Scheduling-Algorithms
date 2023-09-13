@@ -10,6 +10,7 @@ from algorithms.rr import simulate_rr
 from algorithms.sjf_co import simulate_sjf_co
 from algorithms.sjf_pr import simulate_sjf_pr
 from algorithms.priority import simulate_priority
+from algorithms.priority_pr import simulate_priority_pr
 
 from typing import Callable
 import sys
@@ -21,11 +22,13 @@ def simulate_scheduler(processes: list[Process], algorithm: str, parameters: lis
         "sjf_co":simulate_sjf_co,
         "sjf_pr":simulate_sjf_pr,
         "priority":simulate_priority,
+        "priority_pr":simulate_priority_pr,
         "1":simulate_fcfs,
         "2":simulate_rr,
         "3":simulate_sjf_co,
         "4":simulate_sjf_pr,
-        "5":simulate_priority
+        "5":simulate_priority,
+        "6":simulate_priority_pr
     }
 
     # algorithm can now be taken from dictionary and called.

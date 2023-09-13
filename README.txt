@@ -33,6 +33,8 @@ number    name    description & parameters
                      No positional parameters.
    5    priority   Processes are executed in order of priority, without preemption.
                      No positional parameters.
+   6   priority_pr Processes are executed in order of priority, with preemption.
+                     No positional parameters.
 
 EXAMPLES:
 
