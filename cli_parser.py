@@ -16,13 +16,6 @@ def parse_arguments(arguments: list[str]) -> dict[str, str | list[str]]:
     if arguments[1] in ["-v", "--version"]:
         return {"action": "version"}
     
-    if arguments[1].endswith(".xml"):
-        c: dict[str, str | list[str]] = {
-            "action" : "use_config",
-            "file" : sys.argv[1]
-            }
-        return c
-    
     elif not arguments[1].endswith((".csv", ".txt")):
         print("Error: First positional argument must be an input file with a .txt, .csv, or .xml extension.")
         print("Run this program with -h or --help to learn more.")

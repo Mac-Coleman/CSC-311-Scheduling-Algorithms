@@ -12,6 +12,7 @@ from algorithms.sjf_pr import simulate_sjf_pr
 from algorithms.priority import simulate_priority
 
 from typing import Callable
+import sys
 
 def simulate_scheduler(processes: list[Process], algorithm: str, parameters: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
     algoDict: dict[str, Callable[[list[Process], list[str]], tuple[list[ProcessExecutionRecord], dict[int, int]]]] = { # dictionary with possible algorithm inputs as keys, and pointers to the correct algorithm function as values
@@ -26,7 +27,10 @@ def simulate_scheduler(processes: list[Process], algorithm: str, parameters: lis
         "4":simulate_sjf_pr,
         "5":simulate_priority
     }
-    if(algoDict.get(algorithm.lower())!=None): # makes sure the requested algorithm exists, otherwise raises error
-        return algoDict[algorithm.lower()](processes, parameters) # returns a tuple with the completed schedule and a dictionary of the wait times
-    else:
-        raise KeyError('Algorithm Not Found')
+
+    try:
+        return algoDict[algorithm.lower()](processes, parameters)
+    except KeyError as e:
+        # If the requested process is not in the table, exit
+        print(f"Error: '{algorithm}' is not a valid algorithm in this simulator.")
+        sys.exit(1)

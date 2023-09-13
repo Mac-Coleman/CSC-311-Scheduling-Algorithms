@@ -52,23 +52,22 @@ def handle_trace(arguments: dict[str, str | list[str]]) -> None:
     
     processes = parse_trace(filename)
 
-    print("Arriving processes:")
-    for process in processes:
-        print(process)
+    # print("Arriving processes:")
+    # for process in processes:
+    #     print(process)
         
     (schedule, waiting_times) = simulate_scheduler(processes, algorithm, parameters)
     write_output(schedule, waiting_times, filename, algorithm)
 
     print("\nSchedule:")
+    print(f"Timestamp   |  PID    |  Burst time remaining")
     for record in schedule:
-        print(record)
+        print(f"{record.execution_start_time} | {record.pid} | {record.time_remaining}")
+        
     
-    print("\nWaiting times:")
-    for (key, value) in waiting_times.items():
-        print(f"pid: {key}, time: {value}")
-
-def handle_config(arguments: dict[str, str | list[str]]) -> None:
-    pass
+    # print("\nWaiting times:")
+    # for (key, value) in waiting_times.items():
+    #     print(f"pid: {key}, time: {value}")
 
 if __name__ == "__main__":
     
@@ -82,5 +81,3 @@ if __name__ == "__main__":
             handle_version(arguments)
         case "use_trace":
             handle_trace(arguments)
-        case "ues_config":
-            handle_config(arguments)

@@ -6,8 +6,13 @@ import sys
 def parse_trace(file_name: str) -> list[Process]:
 
     trace_data: str = ""
-    with open(file_name, 'r') as trace:
-        trace_data = trace.read()
+
+    try:
+        with open(file_name, 'r') as trace:
+            trace_data = trace.read()
+    except FileNotFoundError as e:
+        print(f"Error: File '{file_name}' does not exist!")
+        sys.exit(1)
 
     process_list: list[Process] = []
     process_lines = trace_data.split('\n')
