@@ -60,15 +60,6 @@ def compute_statistics(samples: list[int]) -> tuple[int, int, float, float]:
 
 
 
-def print_output_data(records: list[ProcessExecutionRecord], waiting_times: dict[int, int]) -> None:
-    pass
 
-if __name__ == "__main__":
-    wait_times = {1:3, 2:55, 3:12, 4:87}
 
-    test_records = []
-    for i in range(10):
-        test_records.append(ProcessExecutionRecord(i, i*3, i*2, i, None))
-
-    write_output(test_records, wait_times, "test.csv", "idunno")
     
