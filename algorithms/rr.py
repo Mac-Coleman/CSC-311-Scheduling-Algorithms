@@ -44,9 +44,6 @@ def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[lis
         # Simulate execution of the current process' time quantum
         # Add the processes that arrived during the time quantum to the ready queue
         # Readd the current process to the ready queue if it has any time remaining.
-
-        print(f"next_process:{next_process}, len(arriving_processes): {len(arriving_processes)}")
-        print(f"time: {cpu_time}")
         
         current_process = ready_queue.pop(0)
 
