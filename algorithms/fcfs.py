@@ -7,7 +7,7 @@ import sys
 
 def simulate_fcfs(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
 
-    if len(args) != 1:
+    if len(args) != 0:
         print(f"Invalid arguments: {args}")
         print("First-come-first-serve requires exactly zero arguments.")
         print("")

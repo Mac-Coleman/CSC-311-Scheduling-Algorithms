@@ -1,0 +1,18 @@
+No lines of this file are valid!
+This file should not be read as a trace file!
+This file is used to test whether the program can identify whether it has been given a completely invalid file.
+15,13,0,Invalid
+0,0,0,NOT_PARSABLE
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+15
+NO!
