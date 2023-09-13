@@ -28,6 +28,8 @@ def simulate_scheduler(processes: list[Process], algorithm: str, parameters: lis
         "5":simulate_priority
     }
 
+    # algorithm can now be taken from dictionary and called.
+
     try:
         return algoDict[algorithm.lower()](processes, parameters)
     except KeyError as e:

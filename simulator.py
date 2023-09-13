@@ -42,6 +42,7 @@ help_string = "{} {}\n" \
 
 def handle_help(arguments: dict[str, str | list[str]]) -> None:
     print(help_string.format(name, version, sys.argv[0], sys.argv[0], sys.argv[0], sys.argv[0], sys.argv[0]))
+    # sys.argv[0] here is used to display the file name.
 
 def handle_version(arguments: dict[str, str | list[str]]) -> None:
     print(f"{name} {version}")
@@ -52,15 +53,13 @@ def handle_trace(arguments: dict[str, str | list[str]]) -> None:
     algorithm = cast(str, arguments["algorithm"])
     parameters = cast(list[str], arguments["parameters"])
     
-    processes = parse_trace(filename)
-
-    # print("Arriving processes:")
-    # for process in processes:
-    #     print(process)
+    processes = parse_trace(filename) # Parse the input file
         
-    (schedule, waiting_times) = simulate_scheduler(processes, algorithm, parameters)
-    stats_string = write_output(schedule, waiting_times, filename, algorithm)
+    (schedule, waiting_times) = simulate_scheduler(processes, algorithm, parameters) # Simulate the trace
+    stats_string = write_output(schedule, waiting_times, filename, algorithm) # Write the output
 
+
+    # Display the output in the terminal
     print("\nSchedule:")
     print(f" Timestamp |     PID    |  Burst time remaining")
     for record in schedule:

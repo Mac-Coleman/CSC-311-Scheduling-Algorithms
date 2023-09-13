@@ -15,7 +15,7 @@ def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[lis
         sys.exit(1)
         
     try:
-        quantum = int(args[0]) # Raise typerror if not possible
+        quantum = int(args[0]) # Raise valueerror if not possible
     except ValueError as e:
         print(f"Invalid argument for QUANTUM: {args[0]}")
         print("\tQUANTUM must be a positive integer.")
@@ -27,6 +27,7 @@ def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[lis
         sys.exit(1)
 
 
+    # Setup outputs and state
     schedule: list[ProcessExecutionRecord] = []
     waiting_times: dict[int, int] = {}
     ready_queue: list[Process] = []
@@ -56,13 +57,15 @@ def simulate_rr(arriving_processes: list[Process], args: list[str]) -> tuple[lis
         for process in ready_queue:
             waiting_times[process.pid] += burst_time
 
+        # Add processes that arrived during execution to the ready queue
         while next_process < len(arriving_processes) and arriving_processes[next_process].arrival_time < cpu_time:
             ready_queue.append(arriving_processes[next_process])
             next_process += 1
         
         if current_process.burst_time > 0:
             ready_queue.append(current_process)
-        
+
+        # Skip ahead if we run out of processes in ready queue
         if len(ready_queue) == 0 and next_process < len(arriving_processes):
             cpu_time = arriving_processes[next_process].arrival_time # Skip forward to time of next arriving process.
             while next_process < len(arriving_processes) and arriving_processes[next_process].arrival_time <= cpu_time:

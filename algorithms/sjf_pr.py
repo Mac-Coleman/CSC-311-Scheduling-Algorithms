@@ -12,6 +12,7 @@ def simulate_sjf_pr(arriving_processes: list[Process], args: list[str]) -> tuple
         print("\tNone.")
         sys.exit(1)
 
+    # Setup our simulation outputs and state
     schedule: list[ProcessExecutionRecord] = []
     waiting_times: dict[int, int] = {}
     ready_queue: list[Process] = []
@@ -23,9 +24,10 @@ def simulate_sjf_pr(arriving_processes: list[Process], args: list[str]) -> tuple
     for process in arriving_processes:
         waiting_times[process.pid] = 0
 
+    # Keep running as long as there are processes that have not terminated.
     while next_process < len(arriving_processes) or len(ready_queue) > 0:
 
-        if len(ready_queue) == 0: # We have not finished all processes but still need to add them to the ready queue!
+        if len(ready_queue) == 0: # We have not finished all processes but still need to add arriving ones to the ready queue!
             # Also, next_process is guaranteed to be valid within this block.
 
             cpu_time = arriving_processes[next_process].arrival_time # Skip ahead to the next arriving process
@@ -35,10 +37,11 @@ def simulate_sjf_pr(arriving_processes: list[Process], args: list[str]) -> tuple
                 next_process += 1
 
 
-        current_process = choose_shortest(ready_queue) # removes the shortest process from the ready queue.
+        current_process = choose_shortest(ready_queue) # Take the shortest process
 
         max_runtime = current_process.burst_time
 
+        # We need to see if anything will interrupt the current process.
         lookahead = next_process
         possible_interruption_time = cpu_time + current_process.burst_time
         if lookahead < len(arriving_processes):
@@ -49,6 +52,7 @@ def simulate_sjf_pr(arriving_processes: list[Process], args: list[str]) -> tuple
                 max_runtime = arriving_processes[lookahead].arrival_time - cpu_time
             lookahead += 1
 
+        # Now we know how long the process can run
         start_time = cpu_time
         run_time = current_process.execute(max_runtime)
         cpu_time += run_time
