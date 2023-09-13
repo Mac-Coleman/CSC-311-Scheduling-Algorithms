@@ -1,7 +1,17 @@
 from process import Process, ProcessExecutionRecord
 import math
+import sys
 
 def simulate_sjf_pr(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
+
+    if len(args) != 0:
+        print(f"Invalid arguments: {args}")
+        print("Shortest job first with preemption requires exactly zero parameters.")
+        print("")
+        print("PARAMETERS:")
+        print("\tNone.")
+        sys.exit(1)
+
     schedule: list[ProcessExecutionRecord] = []
     waiting_times: dict[int, int] = {}
     ready_queue: list[Process] = []

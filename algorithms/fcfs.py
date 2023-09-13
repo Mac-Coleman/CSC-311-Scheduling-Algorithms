@@ -5,7 +5,7 @@ def simulate_fcfs(arriving_processes: list[Process], args: list[str]) -> tuple[l
 
     if len(args) != 0:
         print(f"Invalid arguments: {args}")
-        print("First-come-first-serve requires exactly zero arguments.")
+        print("First-come-first-serve requires exactly zero parameters.")
         print("")
         print("PARAMETERS:")
         print("\tNone.")

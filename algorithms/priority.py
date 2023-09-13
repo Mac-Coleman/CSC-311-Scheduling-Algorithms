@@ -2,8 +2,18 @@
 from process import Process, ProcessExecutionRecord
 from trace_parser import parse_trace
 from math import inf
+import sys
 
 def simulate_priority(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
+
+    if len(args) != 0:
+        print(f"Invalid arguments: {args}")
+        print("Priority requires exactly zero parameters.")
+        print("")
+        print("PARAMETERS:")
+        print("\tNone.")
+        sys.exit(1)
+
     process_queue = []
     time = arriving_processes[0].arrival_time        # time starts at one, csv file
     index = 0

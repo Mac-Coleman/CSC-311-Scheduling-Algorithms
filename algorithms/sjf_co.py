@@ -3,9 +3,19 @@ Shortest Job First algorithm without any preemption
 """
 
 from process import Process, ProcessExecutionRecord
+import sys
 # dataclasses to make keeping track of the process info and writing the outputs easier
 
 def simulate_sjf_co(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int,int]]:
+
+    if len(args) != 0:
+        print(f"Invalid arguments: {args}")
+        print("Shortest-job-first requires exactly zero parameters.")
+        print("")
+        print("PARAMETERS:")
+        print("\tNone.")
+        sys.exit(1)
+
     sorted_processes: list[Process] = []
     per_list: list[ProcessExecutionRecord] = []
     wait_times: dict[int,int] = {}
