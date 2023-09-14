@@ -1,11 +1,15 @@
-"""
-Assigned maintainer: Mac
-"""
-
 from process import Process, ProcessExecutionRecord
-from trace_parser import parse_trace
+import sys
 
 def simulate_fcfs(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
+
+    if len(args) != 0:
+        print(f"Invalid arguments: {args}")
+        print("First-come-first-serve requires exactly zero parameters.")
+        print("")
+        print("PARAMETERS:")
+        print("\tNone.")
+        sys.exit(1)
     
     cpu_time: int = arriving_processes[0].arrival_time
     execution_schedule: list[ProcessExecutionRecord] = []
@@ -13,10 +17,22 @@ def simulate_fcfs(arriving_processes: list[Process], args: list[str]) -> tuple[l
 
     for arriving_process in arriving_processes:
 
+        # If the next process has not yet arrived, skip to the time it did.
         if cpu_time < arriving_process.arrival_time:
             cpu_time = arriving_process.arrival_time
-        execution_schedule.append(arriving_process.to_record(cpu_time, arriving_process.burst_time))
+        
+        # Save the record of the waiting time.
+        # This algorithm is not preemptive, so we just have to save the difference
+        # between the current time and the arrival time.
         waiting_times[arriving_process.pid] = cpu_time - arriving_process.arrival_time
-        cpu_time += arriving_process.burst_time
+
+        # Calculate the time the process spends running.
+        starting_time = cpu_time
+        running_time = arriving_process.execute(arriving_process.burst_time)
+        cpu_time += running_time
+
+        # Save the record of the work done.
+        record = arriving_process.to_record(starting_time, running_time)
+        execution_schedule.append(record)
         
     return execution_schedule, waiting_times

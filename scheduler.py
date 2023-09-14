@@ -1,6 +1,4 @@
 """
-Assigned maintainer: Torii
-
 simulate_scheduler takes a list of processes and the specified algorithm, and returns 
 the tuple that the algorithm functions will all return
 """
@@ -11,8 +9,11 @@ from algorithms.fcfs import simulate_fcfs
 from algorithms.rr import simulate_rr
 from algorithms.sjf_co import simulate_sjf_co
 from algorithms.sjf_pr import simulate_sjf_pr
+from algorithms.priority import simulate_priority
+from algorithms.priority_pr import simulate_priority_pr
 
 from typing import Callable
+import sys
 
 def simulate_scheduler(processes: list[Process], algorithm: str, parameters: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
     algoDict: dict[str, Callable[[list[Process], list[str]], tuple[list[ProcessExecutionRecord], dict[int, int]]]] = { # dictionary with possible algorithm inputs as keys, and pointers to the correct algorithm function as values
@@ -20,12 +21,21 @@ def simulate_scheduler(processes: list[Process], algorithm: str, parameters: lis
         "rr":simulate_rr,        
         "sjf_co":simulate_sjf_co,
         "sjf_pr":simulate_sjf_pr,
+        "priority":simulate_priority,
+        "priority_pr":simulate_priority_pr,
         "1":simulate_fcfs,
         "2":simulate_rr,
         "3":simulate_sjf_co,
-        "4":simulate_sjf_pr
+        "4":simulate_sjf_pr,
+        "5":simulate_priority,
+        "6":simulate_priority_pr
     }
-    if(algoDict.get(algorithm.lower())!=None): # makes sure the requested algorithm exists, otherwise raises error
-        return algoDict[algorithm.lower()](processes, parameters) # returns a tuple with the completed schedule and a dictionary of the wait times
-    else:
-        raise KeyError('Algorithm Not Found')
+
+    # algorithm can now be taken from dictionary and called.
+
+    try:
+        return algoDict[algorithm.lower()](processes, parameters)
+    except KeyError as e:
+        # If the requested process is not in the table, exit
+        print(f"Error: '{algorithm}' is not a valid algorithm in this simulator.")
+        sys.exit(1)

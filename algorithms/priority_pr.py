@@ -1,12 +1,13 @@
 from process import Process, ProcessExecutionRecord
 import math
 import sys
+from typing import cast
 
-def simulate_sjf_pr(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
+def simulate_priority_pr(arriving_processes: list[Process], args: list[str]) -> tuple[list[ProcessExecutionRecord], dict[int, int]]:
 
     if len(args) != 0:
         print(f"Invalid arguments: {args}")
-        print("Shortest job first with preemption requires exactly zero parameters.")
+        print("Priority with preemption requires exactly zero parameters.")
         print("")
         print("PARAMETERS:")
         print("\tNone.")
@@ -37,9 +38,10 @@ def simulate_sjf_pr(arriving_processes: list[Process], args: list[str]) -> tuple
                 next_process += 1
 
 
-        current_process = choose_shortest(ready_queue) # Take the shortest process
+        current_process = choose_highest_priority(ready_queue) # Take the shortest process
 
         max_runtime = current_process.burst_time
+        max_priority = cast(int, current_process.priority)
 
         # We need to see if anything will interrupt the current process.
         lookahead = next_process
@@ -48,8 +50,9 @@ def simulate_sjf_pr(arriving_processes: list[Process], args: list[str]) -> tuple
             possible_interruption_time = arriving_processes[next_process].arrival_time
 
         while lookahead < len(arriving_processes) and arriving_processes[lookahead].arrival_time == possible_interruption_time:
-            if arriving_processes[lookahead].burst_time < max_runtime:
+            if cast(int, arriving_processes[lookahead].priority) < max_priority:
                 max_runtime = arriving_processes[lookahead].arrival_time - cpu_time
+                max_priority = cast(int, arriving_processes[lookahead].priority)
             lookahead += 1
 
         # Now we know how long the process can run
@@ -71,12 +74,12 @@ def simulate_sjf_pr(arriving_processes: list[Process], args: list[str]) -> tuple
 
     return (schedule, waiting_times)
 
-def choose_shortest(processes: list[Process]) -> Process:
+def choose_highest_priority(processes: list[Process]) -> Process:
     index = 0
-    shortest = math.inf
+    highest = math.inf
     for i in range(len(processes)):
-        if processes[i].burst_time < shortest:
-            shortest = processes[i].burst_time
+        if cast(int, processes[i].priority) < highest:
+            highest = cast(int, processes[i].priority)
             index = i
     
     return processes.pop(index)

@@ -15,62 +15,68 @@ name = "Schedule Simulator"
 version = "0.0.1"
 
 help_string = "{} {}\n" \
-    "usage: {} [-v | -h] INPUT_FILE [ALGORITHM [PARAMETERS ...]]\n" \
+    "usage: {} [-v | -h] INPUT_FILE ALGORITHM [PARAMETERS ...]\n" \
     "Simulate various scheduling algorithms to produce schedules and waiting time statistics.\n\n" \
     "OPTIONS:\n" \
     "\t-h, --help\t\tprint this help message.\n" \
     "\t-v, --version\t\tprint version information.\n\n" \
     "INPUT_FILE must be either a .csv or .txt file containing process trace information\n"\
-    "or a .xml file with configuration information. When INPUT_FILE is a .csv or .txt trace\n" \
-    "file, an algorithm must be specified from the table below. Some algorithms require\n" \
+    "An algorithm must be specified from the table below. Some algorithms require\n" \
     "additional options which must be passed when required.\n\n" \
     "ALGORITHMS:\n" \
-    "\tnumber\tname\tdescription\n" \
-    "\t*****************************\n" \
-    "\t1\tfcfs\tfirst come first serve\n" \
-    "\t2\trr\tround robin\n" \
-    "\t\t\t[quantum] the time each process gets before it is evicted from the processor.\n" \
-    "\t3\tsjf-co\tshortest job first without preemption\n" \
-    "\t4\tsjf-pr\tshortest job first with preemption\n\n" \
+    "\tnumber\tname\t\tdescription\n" \
+    "\t***********************************\n" \
+    "\t1\tfcfs\t\tfirst come first serve\n" \
+    "\t2\trr\t\tround robin\n" \
+    "\t\t\t\t[quantum] the time each process gets before it is evicted from the processor.\n" \
+    "\t3\tsjf-co\t\tshortest job first without preemption\n" \
+    "\t4\tsjf-pr\t\tshortest job first with preemption\n" \
+    "\t5\tpriority\tpriority without preemption\n\n"\
     "Examples:\n" \
-    "\t{} trace.txt rr 4\tSimulate the processes in trace.txt with round robin with a time quantum of 4.\n" \
-    "\t{} config.xml\t\tSimulate according to the information in config.xml\n\n" \
+    "\tpython {} trace.txt rr 4\tSimulate the processes in trace.txt with round robin with a time quantum of 4.\n" \
+    "\tpython {} trace.txt fcfs\tSimulate the processes in trace.txt with first come first serve\n" \
+    "\tpython {} trace.txt 3\t\tSimulate the processes in trace.txt with sjf without preemption\n" \
+    "\tpython {} -h\t\t\tPrint this usage information.\n\n"\
     "See the README for more help.\n" \
     "Source online: <https://github.com/Mac-Coleman/CSC-311-Scheduling-Algorithms>"
 
 def handle_help(arguments: dict[str, str | list[str]]) -> None:
-    print(help_string.format(name, version, sys.argv[0], sys.argv[0], sys.argv[0]))
+    print(help_string.format(name, version, sys.argv[0], sys.argv[0], sys.argv[0], sys.argv[0], sys.argv[0]))
+    # sys.argv[0] here is used to display the file name.
 
 def handle_version(arguments: dict[str, str | list[str]]) -> None:
     print(f"{name} {version}")
 
 def handle_trace(arguments: dict[str, str | list[str]]) -> None:
+
+    filename = cast(str, arguments["file"])
+    algorithm = cast(str, arguments["algorithm"])
+    parameters = cast(list[str], arguments["parameters"])
     
-    processes = parse_trace(cast(str, arguments["file"]), True)
-    (schedule, waiting_times) = simulate_scheduler(processes, cast(str, arguments["algorithm"]), cast(list[str], arguments["parameters"]))
-    write_output(schedule, waiting_times)
+    processes = parse_trace(filename) # Parse the input file
+        
+    (schedule, waiting_times) = simulate_scheduler(processes, algorithm, parameters) # Simulate the trace
+    stats_string = write_output(schedule, waiting_times, filename, algorithm) # Write the output
 
-    print("Arriving processes:")
-    for process in processes:
-        print(process)
 
+    # Display the output in the terminal
     print("\nSchedule:")
+    print(f" Timestamp |     PID    |  Burst time remaining")
     for record in schedule:
-        print(record)
+        print(f"{record.execution_start_time : 10} | {record.pid : 10} | {record.time_remaining: 10}")
+        
     
     print("\nWaiting times:")
+    print(f"    PID    | Waiting Time")
     for (key, value) in waiting_times.items():
-        print(f"pid: {key}, time: {value}")
+        print(f"{key : 10} | {value : 10}")
 
-def handle_config(arguments: dict[str, str | list[str]]) -> None:
-    pass
+    print("\n" + stats_string)
 
 if __name__ == "__main__":
     
     arguments = parse_arguments(sys.argv)
     # Decide what to do based on parsed arguments...
-
-    # print(arguments)
 
     match arguments["action"]:
         case "help":
@@ -79,5 +85,3 @@ if __name__ == "__main__":
             handle_version(arguments)
         case "use_trace":
             handle_trace(arguments)
-        case "ues_config":
-            handle_config(arguments)

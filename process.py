@@ -2,6 +2,9 @@ from dataclasses import dataclass
 
 @dataclass
 class ProcessExecutionRecord:
+    """
+    A dataclass used for representing a process being executed.
+    """
     pid: int
     execution_start_time: int
     burst_time: int
@@ -10,6 +13,9 @@ class ProcessExecutionRecord:
 
 @dataclass
 class Process:
+    """
+    A dataclass used for representing a process.
+    """
     pid: int
     arrival_time: int
     burst_time: int
@@ -23,12 +29,15 @@ class Process:
         """
         return ProcessExecutionRecord(self.pid, execution_start_time, execution_burst_time, self.burst_time, self.priority)
     
-    def execute(self, time: int) -> None:
+    def execute(self, time: int) -> int:
         """
         Decrements the remaining burst time of the process by [time] units.
         Used to simulate execution of a process.
+        Returns the time for which the process was actually executed.
         """
+        before = self.burst_time
         self.burst_time = 0 if time >= self.burst_time else self.burst_time - time
+        return before - self.burst_time
 
 if __name__ == "__main__":
     p = Process(5, 2, 3, None)
